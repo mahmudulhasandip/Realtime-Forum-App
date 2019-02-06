@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
+    protected $guarded = [];
     public function question()
     {
-        return $this->belongsTo('Question', 'question_id', 'id');
+        return $this->belongsTo('App\Model\Question', 'question_id', 'id');
     }
 
     public function user()
@@ -20,4 +21,6 @@ class Reply extends Model
     {
         return $this->hasMany('App\Model\Like');
     }
+
+
 }

@@ -17,12 +17,12 @@ class Question extends Model
 
     public function replies()
     {
-        return $this->hasMany('Reply', 'question_id', 'id');
+        return $this->hasMany('App\Model\Reply', 'question_id', 'id');
     }
 
     public function category()
     {
-        return $this->belongsTo('Category', 'question_id', 'id');
+        return $this->belongsTo('App\Model\Category', 'question_id', 'id');
     }
 
     public function getRouteKeyName()
