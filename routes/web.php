@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::view('/{any}', 'home');
+Route::view('/{any}/{xyz}', 'home');
