@@ -4,6 +4,10 @@
       <v-text-field v-model="form.email" type="email" label="Email" required></v-text-field>
       <v-text-field v-model="form.password" type="password" label="Password" required></v-text-field>
       <v-btn color="green" type="submit">Login</v-btn>
+
+      <router-link to="/signup">
+        <v-btn color="blue">Sign Up</v-btn>
+      </router-link>
     </v-form>
   </v-container>
 </template>
@@ -18,9 +22,15 @@ export default {
       }
     };
   },
+  created() {
+    if (User.loggedIn()) {
+      this.$router.push({ name: "forum" });
+    }
+  },
   methods: {
     login() {
       User.login(this.form);
+      //   this.$router.push({ name: "forum" });
     }
   }
 };
