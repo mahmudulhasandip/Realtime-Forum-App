@@ -35,4 +35,14 @@ class Question extends Model
     {
         return "/question/$this->slug";
     }
+
+    // boot
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($question) {
+            $question->slug = str_slug($question->title);
+        });
+    }
 }

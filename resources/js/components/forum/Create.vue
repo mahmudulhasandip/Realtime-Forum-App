@@ -16,11 +16,7 @@
 </template>
 
 <script>
-import markdownEditor from "vue-simplemde/src/markdown-editor";
 export default {
-  components: {
-    markdownEditor
-  },
   data() {
     return {
       form: {
@@ -42,7 +38,7 @@ export default {
     create() {
       axios
         .post("/api/question", this.form)
-        .then(res => console.log(res.data))
+        .then(res => this.$router.push(res.data.path))
         .catch(error => (this.errors = error.response.data.error));
     }
   }
