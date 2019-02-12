@@ -9,6 +9,7 @@ import Logout from '../components/login/Logout';
 import Forum from '../components/forum/Forum';
 import Read from '../components/forum/Read';
 import Create from '../components/forum/Create';
+import CreateCategory from '../components/category/CreateCategory';
 
 const routes = [{
     path: '/login',
@@ -31,6 +32,9 @@ const routes = [{
     path: '/ask',
     component: Create,
     name: 'create'
+}, {
+    path: '/category',
+    component: CreateCategory
 }]
 
 const router = new VueRouter({

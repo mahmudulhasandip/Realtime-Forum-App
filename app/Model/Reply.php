@@ -22,5 +22,12 @@ class Reply extends Model
         return $this->hasMany('App\Model\Like');
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($reply) {
+            $reply->user_id = auth()->id();
+        });
+    }
 
 }

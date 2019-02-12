@@ -9,6 +9,8 @@ class Question extends Model
     protected $fillable = ['title', 'slug', 'body', 'user_id', 'category_id'];
     // protected $guarded = ['created_at'];
 
+    protected $with = ['replies'];
+
 
     public function user()
     {
@@ -17,7 +19,7 @@ class Question extends Model
 
     public function replies()
     {
-        return $this->hasMany('App\Model\Reply', 'question_id', 'id');
+        return $this->hasMany('App\Model\Reply', 'question_id', 'id')->latest();
     }
 
     public function category()
