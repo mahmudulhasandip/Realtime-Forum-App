@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    // protected $fillable = ['title', 'slug', 'body', 'category_id', 'user_id'];
-    protected $guarded = [];
+    protected $fillable = ['title', 'slug', 'body', 'user_id', 'category_id'];
+    // protected $guarded = ['created_at'];
 
 
     public function user()
@@ -42,6 +42,10 @@ class Question extends Model
     {
         parent::boot();
         static::creating(function ($question) {
+            $question->slug = str_slug($question->title);
+        });
+
+        static::updating(function ($question) {
             $question->slug = str_slug($question->title);
         });
     }

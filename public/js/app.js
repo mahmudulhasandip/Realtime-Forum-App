@@ -1951,6 +1951,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["data"],
   data: function data() {
     return {
       form: {
@@ -1958,6 +1959,21 @@ __webpack_require__.r(__webpack_exports__);
         body: null
       }
     };
+  },
+  mounted: function mounted() {
+    this.form = this.data;
+  },
+  methods: {
+    cancel: function cancel() {
+      EventBus.$emit("cancelEditing");
+    },
+    update: function update() {
+      var _this = this;
+
+      axios.patch("/api/question/".concat(this.form.slug), this.form).then(function (res) {
+        return _this.cancel();
+      });
+    }
   }
 });
 
@@ -2025,8 +2041,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2050,6 +2064,9 @@ __webpack_require__.r(__webpack_exports__);
 
       EventBus.$on("startEditing", function () {
         _this.editing = true;
+      });
+      EventBus.$on("cancelEditing", function () {
+        _this.editing = false;
       });
     },
     getQuestion: function getQuestion() {
@@ -56512,7 +56529,7 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.create($event)
+              return _vm.update($event)
             }
           }
         },
@@ -56543,7 +56560,7 @@ var render = function() {
             [
               _c(
                 "v-btn",
-                { attrs: { icon: "", small: "" } },
+                { attrs: { icon: "", small: "", type: "submit" } },
                 [
                   _c("v-icon", { attrs: { color: "teal", small: "" } }, [
                     _vm._v("save")
@@ -56554,7 +56571,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-btn",
-                { attrs: { icon: "", small: "" } },
+                { attrs: { icon: "", small: "" }, on: { click: _vm.cancel } },
                 [_c("v-icon", { attrs: { small: "" } }, [_vm._v("cancel")])],
                 1
               )
@@ -56640,23 +56657,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm.editing
-        ? _c("edit-question")
-        : _c(
-            "div",
-            [
-              _vm.question
-                ? _c("show-question", { attrs: { data: _vm.question } })
-                : _vm._e()
-            ],
-            1
-          )
-    ],
-    1
-  )
+  return _vm.question
+    ? _c(
+        "div",
+        [
+          _vm.editing
+            ? _c("edit-question", { attrs: { data: _vm.question } })
+            : _c("show-question", { attrs: { data: _vm.question } })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
