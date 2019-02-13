@@ -17,6 +17,10 @@ Vue.use(Vuetify);
 import User from './Helpers/User';
 window.User = User;
 
+// import helper exception class
+import Exception from './Helpers/Exception';
+window.Exception = Exception;
+
 // markdown editor
 import VueSimplemde from 'vue-simplemde'
 Vue.use(VueSimplemde)

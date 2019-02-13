@@ -57,7 +57,7 @@ export default {
           this.unread = res.data.unread;
           this.unreadCount = res.data.unread.length;
         })
-        .catch(error => error.response.data);
+        .catch(error => Exception.handle(error));
     },
 
     readId(notification) {
