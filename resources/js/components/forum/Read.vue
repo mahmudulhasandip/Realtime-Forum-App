@@ -2,7 +2,8 @@
   <div v-if="question">
     <edit-question :data="question" v-if="editing"></edit-question>
     <show-question :data="question" v-else></show-question>
-    <new-reply :questionSlug="question.slug"></new-reply>
+    <new-reply v-if="loggedIn" :questionSlug="question.slug"></new-reply>
+    <router-link v-else to="/login" style="margin-left: 6rem">Login to Reply</router-link>
     <replies :question="question"></replies>
   </div>
 </template>
@@ -28,6 +29,11 @@ export default {
   created() {
     this.listen();
     this.getQuestion();
+  },
+  computed: {
+    loggedIn() {
+      return User.loggedIn();
+    }
   },
   methods: {
     listen() {

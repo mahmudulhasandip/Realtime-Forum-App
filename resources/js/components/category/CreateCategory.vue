@@ -1,9 +1,10 @@
 <template>
   <v-container>
+    <v-alert :value="true" type="error" v-if="errors">{{ errors.name[0] }}</v-alert>
     <v-form @submit.prevent="submit">
       <v-text-field label="Category Name" v-model="form.name" type="text" required></v-text-field>
-      <v-btn type="submit" color="pink white--text" v-if="editSlug">Update</v-btn>
-      <v-btn type="submit" color="indigo darken-1 white--text" v-else>Create</v-btn>
+      <v-btn type="submit" color="pink white--text" :disabled="disable" v-if="editSlug">Update</v-btn>
+      <v-btn type="submit" color="indigo darken-1 white--text" :disabled="disable" v-else>Create</v-btn>
     </v-form>
 
     <v-card>
@@ -44,8 +45,14 @@ export default {
         name: null
       },
       categories: {},
-      editSlug: null
+      editSlug: null,
+      errors: null
     };
+  },
+  computed: {
+    disable() {
+      //   return !this.form.name;
+    }
   },
   created() {
     if (!User.admin()) {
@@ -62,10 +69,13 @@ export default {
     },
 
     create() {
-      axios.post("/api/category", this.form).then(res => {
-        this.categories.unshift(res.data);
-        this.form.name = null;
-      });
+      axios
+        .post("/api/category", this.form)
+        .then(res => {
+          this.categories.unshift(res.data);
+          this.form.name = null;
+        })
+        .catch(error => (this.errors = error.response.data.errors));
     },
 
     edit(index) {
